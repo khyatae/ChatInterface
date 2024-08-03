@@ -28,13 +28,14 @@ const App = () => {
     "Hi there! How can I help you today?",
     "That's a fascinating topic. Let me think it over for a moment.",
     "Here's a markdown example for you:\n\n# Main Title\n## Subheading\n- Item one\n- Item two\n\n```python\nprint('Hello, world!')\n```",
-    "I don’t have enough information to provide a complete answer. Could you please give me more details?",
+    "I don't have enough information to provide a complete answer. Could you please give me more details?",
     "That's a compelling observation! I hadn't thought of it that way before.",
   ];
 
   const simulateTyping = (text) => {
+    console.log("hii", text);
     setIsTyping(true);
-    let i = 0;
+    let i = -1;
     const intervalId = setInterval(() => {
       setMessages((prev) => [
         ...prev.slice(0, -1),
@@ -44,7 +45,7 @@ const App = () => {
         },
       ]);
       i++;
-      if (i === text.length) {
+      if (i === text.length - 1) {
         clearInterval(intervalId);
         setIsTyping(false);
       }
@@ -69,6 +70,8 @@ const App = () => {
         ...prev,
         { id: Date.now(), type: "system", content: "" },
       ]);
+      console.log(messages);
+      console.log(response);
       simulateTyping(response);
     }, 1000);
   };
@@ -170,7 +173,7 @@ const App = () => {
                       : "bg-gray-200 text-black"
                   }`}
                 >
-                  <ReactMarkdown>{message.content}</ReactMarkdown>
+                  <ReactMarkdown>{message.content || ""}</ReactMarkdown>
                 </div>
               </div>
             </div>
